@@ -11,8 +11,9 @@ def scrape_all():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=True)
 
+    
     news_title, news_paragraph = mars_news(browser)
-    hemisphere_image_urls=hemispheres(browser)
+    """hemisphere_image_urls=hemispheres(browser)"""
     # Run all scraping functions and store results in a dictionary
     data = {
         "news_title": news_title,
@@ -75,6 +76,7 @@ img_url_rel
 img_url = f'https://spaceimages-mars.com/{img_url_rel}'
 img_url
 
+
 # ## Mars Facts
 
 df = pd.read_html('https://galaxyfacts-mars.com')[0]
@@ -113,10 +115,10 @@ def mars_news(browser):
 
     return news_title, news_p
 
-    def featured_image(browser):
+def featured_image(browser):
     # Visit URL
-        url = "https://spaceimages-mars.com"
-        browser.visit(url)
+    url = "https://spaceimages-mars.com"
+    browser.visit(url)
 
     # Find and click the full image button
     full_image_elem = browser.find_by_tag('button')[1]
@@ -165,6 +167,7 @@ def hemis_mars(browser):
         element = browser.find_link_by_text('Sample').first
         img_url = element['href']
         title = browser.find_by_css("h2.title").text
+        hemispheres = {'img_url': img_url,'title': title}
         hemispheres["img_url"] = img_url
         hemispheres["title"] = title
         hemisphere_image_urls.append(hemispheres)
